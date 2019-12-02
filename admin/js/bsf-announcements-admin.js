@@ -29,4 +29,25 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	// Single TR field hide / show support
+    $(function() {
+		$('input.parent-depend-meta-row').change(function(){
+			var table_advance_data = $(this).closest('tr').next('tr.ultimate-portfolio-row');
+			if( $(this).attr('checked') ) {
+				table_advance_data.show();
+			} else {
+				table_advance_data.hide();
+			}
+		});
+	});
+
+	// Tooltip admin support
+    $(function() {
+		$('.portfolio-field-help').hover(function(){
+			var tip_wrap = $(this).closest('.ultimate-portfolio-row');
+			closest_tooltip = tip_wrap.find('.portfolio-tooltip-text');
+			closest_tooltip.toggleClass('display_tool_tip');
+	    });
+	});
+
 })( jQuery );

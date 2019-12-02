@@ -59,6 +59,8 @@ if ( ! class_exists( 'BSF_Announcements_Admin' ) ) {
 			add_action( 'init', array( $this, 'register_bsf_announcements_post_type' ) );
 
 			add_action( 'add_meta_boxes', array( $this, 'meta_box_settings' ) );
+
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		}
 
 		/**
@@ -85,11 +87,11 @@ if ( ! class_exists( 'BSF_Announcements_Admin' ) ) {
 				'new_item'           => __( 'New Announcement', 'bsf-announcements' ),
 				'edit_item'          => __( 'Edit Announcement', 'bsf-announcements' ),
 				'view_item'          => __( 'View Announcement', 'bsf-announcements' ),
-				'all_items'          => __( 'All Announcement', 'bsf-announcements' ),
-				'search_items'       => __( 'Search Announcements', 'bsf-announcements' ),
-				'parent_item_colon'  => __( 'Parent Announcements:', 'bsf-announcements' ),
-				'not_found'          => __( 'No Announcements found.', 'bsf-announcements' ),
-				'not_found_in_trash' => __( 'No Announcements found in Trash.', 'bsf-announcements' ),
+				'all_items'          => __( 'All Announcements', 'bsf-announcements' ),
+				'search_items'       => __( 'Search Announcement', 'bsf-announcements' ),
+				'parent_item_colon'  => __( 'Parent Announcement:', 'bsf-announcements' ),
+				'not_found'          => __( 'No Announcement found.', 'bsf-announcements' ),
+				'not_found_in_trash' => __( 'No Announcement found in Trash.', 'bsf-announcements' ),
 			);
 
 			$args = apply_filters(
@@ -109,11 +111,29 @@ if ( ! class_exists( 'BSF_Announcements_Admin' ) ) {
 					'show_in_rest'          => true,
 					'rest_base'             => 'bsf-announcements',
 					'rest_controller_class' => 'WP_REST_Posts_Controller',
-					'supports'              => array( 'title', 'editor' ),
+					'supports'              => array( 'title' ),
 				)
 			);
 
 			register_post_type( 'bsf-announcements', $args );
+		}
+
+		/**
+		 * Load Admin Scripts
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param  string $hook Current page hook.
+		 * @return void
+		 */
+		static public function admin_scripts( $hook = '' ) {
+
+			if ( 'bsf-announcements' !== get_current_screen()->id && 'edit-bsf-announcements' !== get_current_screen()->id ) {
+				return;
+			}
+
+			wp_enqueue_script( 'bsf-announcements-admin', BSF_ANNOUNCEMENTS_BASE_URL . 'admin/js/' . BSF_Announcements_Helper::get_instance()->get_assets_js_path( 'bsf-announcements-admin' ), array( 'wp-util', 'jquery' ), BSF_ANNOUNCEMENTS_VERSION, true );
+			wp_enqueue_style( 'bsf-announcements-admin', BSF_ANNOUNCEMENTS_BASE_URL . 'admin/css/' . BSF_Announcements_Helper::get_instance()->get_assets_css_path( 'bsf-announcements-admin' ), null, BSF_ANNOUNCEMENTS_VERSION, 'all' );
 		}
 
 		/**

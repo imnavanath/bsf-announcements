@@ -2,3 +2,284 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+ /**
+ * Table
+ */
+.portfolio-input-text {
+    width: 25em;
+}
+.ultimate-portfolio-heading {
+    background: #F9F9F9;
+    border-right: 1px solid #E1E1E1;
+    padding: 13px 15px;
+    width: 25%;
+    color: #333;
+    font-weight: bold;
+}
+.ultimate-portfolio-content {
+    padding: 13px 15px;
+    position: relative;
+}
+div#ultimate-portfolio.postbox h2.hndle,
+.ultimate-portfolio-row td {
+    padding: 12px 24px;
+}
+td.current-portfolio-type {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5em;
+    font-weight: 600;
+}
+.ultimate-portfolio-row td {
+    border-bottom: 1px solid #f0f0f0;
+}
+.postbox table.ultimate-portfolio-table {
+    border: none;
+}
+#poststuff .ultimate-portfolio .inside {
+    margin: 0;
+    padding: 0;
+}
+.ultimate-portfolio-image img {
+    cursor: pointer;
+    max-width: 100px;
+    vertical-align: middle;
+}
+.ultimate-portfolio-remove-media {
+    color: #a00;
+    display: inline-block;
+    margin-left: 1em;
+}
+.ultimate-portfolio-remove-media:hover {
+    color: #dc3232;
+}
+.widefat td .ultimate-portfolio-image p {
+    margin: 0.2em 0;
+}
+
+/**
+ * Hide Edit URL box
+ * Hide Elementor Edit Button
+ * Hide Beaver Builder Edit Button
+ */
+.ultimate-portfolio-type-image #edit-slug-box,
+.ultimate-portfolio-type-iframe #edit-slug-box,
+.ultimate-portfolio-type-video #edit-slug-box,
+.ultimate-portfolio-type-image .fl-builder-admin,
+.ultimate-portfolio-type-iframe .fl-builder-admin,
+.ultimate-portfolio-type-video .fl-builder-admin,
+.ultimate-portfolio-type-image #elementor-switch-mode,
+.ultimate-portfolio-type-iframe #elementor-switch-mode,
+.ultimate-portfolio-type-video #elementor-switch-mode,
+.admin-bar.post-type-ultimate-portfolio #wp-admin-bar-view {
+    display: none;
+}
+
+#ultimate-portfolio .inside {
+    margin:  0;
+    padding: 0;
+}
+
+/*
+* ****************************
+* New popup integration starts
+* ****************************
+*/
+
+/*
+* ************************
+* Add Project Popup Window
+* 1. Overlay
+* 2. Popup Box Alignment
+* 3. Buttons & Textbox
+* 4. ult-portfolio-choose-type-box
+* ************************
+*/
+
+html.ult-portfolio-popup-open{
+    overflow: hidden;
+}
+.ult-portfolio-overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+}
+.ult-portfolio-popup .ult-portfolio-popup-header {
+    padding: 12px 20px;
+    background-color: rgb(0, 133, 186, 0.8);
+    overflow: hidden;
+}
+.ult-portfolio-popup .ult-portfolio-popup-header label {
+    color: #fff;
+    font-weight: 600;
+    float: left;
+}
+.ult-portfolio-popup {
+	display: none;
+    width: 600px;
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    background: #ffffff;
+    transform: translate( -50%, -50% );
+    padding: 0px;
+}
+.ult-portfolio-close {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    float: right;
+    background: transparent;
+    color: #ffff;
+    font-size: 18px;
+    line-height: 14px;
+    text-align: center;
+    border-radius: 999px;
+    cursor: pointer;
+}
+.ult-portfolio-close .dashicons-no-alt {
+    vertical-align: middle;
+}
+.ult-portfolio-content {
+	text-align: left;
+    padding: 20px;;
+}
+.ult-portfolio-overlay.show,
+.ult-portfolio-popup.show {
+	display: block;
+}
+.ult-portfolio-content input[type='text'] {
+    background-color: transparent;
+    box-shadow: none;
+    border:none;
+    border-bottom: 1px #ddd solid;
+    padding: 10px 0 5px;
+    width: 100%;
+    font-size: 15px;
+}
+.ult-portfolio-content input[type='text']:focus {
+    border-bottom: 1px #5b9dd9 solid;
+}
+.ult-portfolio-popup .ult-portfolio-choose-type-box {
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 0 15px 0;
+    overflow: overlay;
+}
+.ult-portfolio-popup .ult-portfolio-choose-type-box .ult-portfolio-default-type-box,
+.ult-portfolio-popup .ult-portfolio-choose-type-box .ult-portfolio-import-type-box{
+    flex: 0 0 50%;
+    width: 46%;
+    float: left;
+    padding: 10px;
+}
+.ult-portfolio-default-type-box .ult-portfolio-default-type-content,
+.ult-portfolio-import-type-box .ult-portfolio-import-type-content{
+    text-align: center;
+    padding: 0 0px 15px;
+}
+.ult-portfolio-default-type-box .ult-portfolio-default-type-content h3,
+.ult-portfolio-import-type-box .ult-portfolio-import-type-content h3 {
+    line-height: 1.4em;
+}
+.ult-portfolio-default-type-content:hover h3,
+.ult-portfolio-import-type-content:hover h3 {
+    color: rgb(0, 133, 186, 1)
+}
+.ult-portfolio-default-type-content h3 .dashicons,
+.ult-portfolio-import-type-content h3 .dashicons{
+    vertical-align: sub;
+    padding-right: 2px;
+}
+.ult-portfolio-content .dashicons-plus {
+    vertical-align: middle;
+}
+.ult-portfolio-popup input[type='radio'] {
+    margin-top: 0px;
+}
+.ult-portfolio-popup label{
+    font-size: 16px;
+}
+.post-type-ultimate-portfolio.post-php .page-title-action {
+    display: none;
+}
+.ultimate-portfolio-set-media {
+    margin-right: 20px;
+}
+/* 
+* ************************
+* Custom classes for future common use
+* ************************
+*/
+.pull-right{
+    float: right;
+}
+.pull-left{
+    float: left;
+}
+.text-error {
+    border-bottom: 1px #FF5050 solid !important;
+}
+#show_error {
+    font-style: italic;
+    color: #FF5050
+}
+.wp-ui-text-primary {
+    color: #0073aa;
+}
+.wp-ui-text-highlight{
+    color: #0073aa;
+}
+/*
+ * Tooltip Support
+ */
+.ultimate-portfolio-row .portfolio-tooltip-text {
+    background: #444;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #fff;
+    height: auto;
+    left: 163px;
+    margin-top: 8px;
+    max-width: 150px;
+    position: absolute;
+    font-size: 12px;
+    line-height: 1.5em;
+    font-weight: normal;
+    padding: 6px 10px;
+    top: auto;
+    display: none;
+    z-index: 10000;
+}
+.ultimate-portfolio-row .portfolio-tooltip-text::before {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid #444;
+    bottom: auto;
+    content: " ";
+    font-size: 0;
+    left: 56px;
+    line-height: 0;
+    margin-left: -5px;
+    position: absolute;
+    top: -10px;
+    width: 0;
+}
+.ultimate-portfolio-row .display_tool_tip {
+    display: block;
+}
+.ultimate-portfolio-row .portfolio-help-tooltip {
+    float: right;
+    color: #b3b3b3;
+}
+.ultimate-portfolio-row .portfolio-help-tooltip:hover {
+    cursor: help;
+}

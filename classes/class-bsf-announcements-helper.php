@@ -24,39 +24,71 @@
  * @subpackage BSF_Announcements/classes
  * @author     Brainstorm Force <support@bsf.io>
  */
-class BSF_Announcements_Helper {
+if ( ! class_exists( 'BSF_Announcements_Helper' ) ) {
 
-	/**
-	 * Load assets JS path
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param  string $js_file_name JS file name.
-	 * @return string               JS minified file path.
-	 */
-	public static function get_assets_js_path( $js_file_name = '' ) {
+	class BSF_Announcements_Helper {
 
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			return $js_file_name . '.js';
+		/**
+		 * The unique instance of the plugin.
+		 *
+		 * @since    1.0.0
+		 * @access   private
+		 * @var      BSF_Announcements_Helper    $instance    Maintains Instance in a variable.
+		 */
+		private static $instance;
+
+		/**
+		 * Gets an instance of our plugin.
+		 * 
+		 * @since    1.0.0
+		 */
+		public static function get_instance() {
+
+			if ( null === self::$instance ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
 		}
 
-		return 'min/' . $js_file_name . '.min.js';
+		/**
+		 * Load assets JS path
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param  string $js_file_name JS file name.
+		 * @return string               JS minified file path.
+		 */
+		public static function get_assets_js_path( $js_file_name = '' ) {
+
+			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+				return $js_file_name . '.js';
+			}
+
+			return 'min/' . $js_file_name . '.min.js';
+		}
+
+		/**
+		 * Load assets CSS path
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param  string $css_file_name CSS file name.
+		 * @return string                CSS minified file path.
+		 */
+		public static function get_assets_css_path( $css_file_name = '' ) {
+
+			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+				return $css_file_name . '.css';
+			}
+
+			return 'min/' . $css_file_name . '.min.css';
+		}
 	}
 
 	/**
-	 * Load assets CSS path
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param  string $css_file_name CSS file name.
-	 * @return string                CSS minified file path.
+	 *  Prepare if class 'BSF_Announcements_Helper' exist.
+	 *  Kicking this off by calling 'get_instance()' method
 	 */
-	public static function get_assets_css_path( $css_file_name = '' ) {
-
-		if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
-			return $css_file_name . '.css';
-		}
-
-		return 'min/' . $css_file_name . '.min.css';
-	}
+	BSF_Announcements_Helper::get_instance();
 }
