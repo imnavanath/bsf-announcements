@@ -29,6 +29,23 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	var bsf_announcements_admin = {
+
+		init: function () {
+            $(document).on( 'focus', '.wcf-custom-filter-input', this._show_datepicker );
+        },
+
+        _show_datepicker: function () {
+            $(".wcf-custom-filter-input").datepicker({
+                dateFormat: 'yy-mm-dd',
+                maxDate: '0',
+                onClose: function (selectedDate) {
+                    jQuery("#wcf_custom_filter_to").datepicker("option", "minDate", selectedDate);
+                }
+            }).attr('readonly', 'readonly').css('background', 'white');
+        },
+	}
+
 	// Single TR field hide / show support
     $(function() {
 		$('input.parent-depend-meta-row').change(function(){
@@ -45,9 +62,15 @@
     $(function() {
 		$('.portfolio-field-help').hover(function(){
 			var tip_wrap = $(this).closest('.ultimate-portfolio-row');
-			closest_tooltip = tip_wrap.find('.portfolio-tooltip-text');
+			var closest_tooltip = tip_wrap.find('.portfolio-tooltip-text');
 			closest_tooltip.toggleClass('display_tool_tip');
 	    });
 	});
+
+	$(document).ready(
+        function () {
+            bsf_announcements_admin.init();
+        }
+    );
 
 })( jQuery );

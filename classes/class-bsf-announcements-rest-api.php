@@ -100,6 +100,24 @@ if ( ! class_exists( 'BSF_Announcements_Rset_API' ) ) {
 					'schema'       => null,
 				)
 			);
+
+			register_rest_field(
+				'bsf-announcements',
+				'wcf_custom_filter_from',
+				array(
+					'get_callback' => array( $this, 'get_post_meta' ),
+					'schema'       => null,
+				)
+			);
+
+			register_rest_field(
+				'bsf-announcements',
+				'wcf_custom_filter_to',
+				array(
+					'get_callback' => array( $this, 'get_post_meta' ),
+					'schema'       => null,
+				)
+			);
 		}
 
 		/**

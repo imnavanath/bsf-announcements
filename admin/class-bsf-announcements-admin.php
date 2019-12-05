@@ -60,6 +60,8 @@ if ( ! class_exists( 'BSF_Announcements_Admin' ) ) {
 
 			add_action( 'add_meta_boxes', array( $this, 'meta_box_settings' ) );
 
+			add_action( 'save_post_bsf-announcements', array( $this, 'save_meta_boxes' ), 10, 3 );
+
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		}
 
@@ -132,7 +134,10 @@ if ( ! class_exists( 'BSF_Announcements_Admin' ) ) {
 				return;
 			}
 
-			wp_enqueue_script( 'bsf-announcements-admin', BSF_ANNOUNCEMENTS_BASE_URL . 'admin/js/' . BSF_Announcements_Helper::get_instance()->get_assets_js_path( 'bsf-announcements-admin' ), array( 'wp-util', 'jquery' ), BSF_ANNOUNCEMENTS_VERSION, true );
+			wp_enqueue_script( 'jquery-ui-datepicker' );
+			wp_enqueue_style( 'jquery-ui-style' );
+
+			wp_enqueue_script( 'bsf-announcements-admin', BSF_ANNOUNCEMENTS_BASE_URL . 'admin/js/' . BSF_Announcements_Helper::get_instance()->get_assets_js_path( 'bsf-announcements-admin' ), array( 'wp-util', 'jquery', 'jquery-ui-datepicker' ), BSF_ANNOUNCEMENTS_VERSION, true );
 			wp_enqueue_style( 'bsf-announcements-admin', BSF_ANNOUNCEMENTS_BASE_URL . 'admin/css/' . BSF_Announcements_Helper::get_instance()->get_assets_css_path( 'bsf-announcements-admin' ), null, BSF_ANNOUNCEMENTS_VERSION, 'all' );
 		}
 
@@ -142,7 +147,7 @@ if ( ! class_exists( 'BSF_Announcements_Admin' ) ) {
 		 * @since 1.0.0
 		 * @return void
 		 */
-		function meta_box_settings() {
+		public function meta_box_settings() {
 
 			if ( 'bsf-announcements' !== get_post_type() ) {
 				return;
@@ -166,16 +171,14 @@ if ( ! class_exists( 'BSF_Announcements_Admin' ) ) {
 
 			$site_url          				= 		get_post_meta( $post->ID, 'portfolio-site-url', true );
 			$call_to_action    				= 		get_post_meta( $post->ID, 'portfolio-site-call-to-action', true );
+			$wcf_custom_filter_from    		= 		get_post_meta( $post->ID, 'wcf_custom_filter_from', true );
+			$wcf_custom_filter_to    		= 		get_post_meta( $post->ID, 'wcf_custom_filter_to', true );
 
 			?>
 				<table class="widefat ultimate-portfolio-table">
 					<tr class="ultimate-portfolio-row">
 						<td class="ultimate-portfolio-heading"><?php _e( 'Site URL', 'ultimate-portfolio' ); ?></td>
-						<td class="ultimate-portfolio-content current-portfolio-type">
-							<?php
-								echo $site_url;
-							?>
-						</td>
+						<td class="ultimate-portfolio-content"><input class="portfolio-input-text" name="portfolio-site-url" type="text" value="<?php echo esc_attr( $site_url ); ?>" /></td>
 					</tr>
 					<tr class="ultimate-portfolio-row">
 						<td class="ultimate-portfolio-heading"><?php _e( 'Thumbnail Image', 'ultimate-portfolio' ); ?>
@@ -186,12 +189,42 @@ if ( ! class_exists( 'BSF_Announcements_Admin' ) ) {
 						</td>
 						<td class="ultimate-portfolio-content">
 							<div class="ultimate-portfolio-image">
-								<?php echo $call_to_action; ?>
+								<input class="wcf-custom-filter-input" type="text" name="wcf_custom_filter_from" placeholder="YYYY-MM-DD" value="<?php echo esc_attr( $wcf_custom_filter_from ); ?>" readonly="readonly" >
+								<input class="wcf-custom-filter-input" type="text" name="wcf_custom_filter_to" placeholder="YYYY-MM-DD" value="<?php echo esc_attr( $wcf_custom_filter_to ); ?>" readonly="readonly" >
 							</div>
 						</td>
 					</tr>
 				</table>
 			<?php
+		}
+
+		/**
+		 * Save BSF-Announcements meta boxes
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param  int    $post_id     Post ID.
+		 * @param  object $post        (WP_Post) Post .
+		 * @param  bool   $update      Whether this is an existing post being updated or not.
+		 * @return void
+		 */
+		public function save_meta_boxes( $post_id = 0, $post = '', $update = '' ) {
+
+			if ( isset( $_POST['portfolio-site-url'] ) ) {
+				update_post_meta( $post_id, 'portfolio-site-url', urldecode( $_POST['portfolio-site-url'] ) );
+			}
+
+			if ( isset( $_POST['portfolio-site-call-to-action'] ) ) {
+				update_post_meta( $post_id, 'portfolio-site-call-to-action', wp_kses_post( $_POST['portfolio-site-call-to-action'] ) );
+			}
+
+			if ( isset( $_POST['wcf_custom_filter_from'] ) ) {
+				update_post_meta( $post_id, 'wcf_custom_filter_from', wp_kses_post( $_POST['wcf_custom_filter_from'] ) );
+			}
+
+			if ( isset( $_POST['wcf_custom_filter_to'] ) ) {
+				update_post_meta( $post_id, 'wcf_custom_filter_to', wp_kses_post( $_POST['wcf_custom_filter_to'] ) );
+			}
 		}
 	}
 
